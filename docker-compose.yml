@@ -1,0 +1,10 @@
+services:
+  quasar:
+    build: .
+    container_name: platform_fe
+    ports:
+      - "9000:9000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm run dev

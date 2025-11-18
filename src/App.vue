@@ -3,9 +3,7 @@
 </template>
 
 <script setup lang="ts">
-  import PlatformConfig from 'src/config/platform-config'
-  import MicroserviceConfig from 'src/config/microservice-config'
+  import { write } from './application/Platform/Log/Application/log-service'
 
-  console.log('Platform example:', PlatformConfig.example)
-  console.log('Microservice example:', MicroserviceConfig.example)
+  write('Hello World!')
 </script>

@@ -8,7 +8,7 @@
  */
 
 const PlatformConfig = Object.freeze({
-  example: import.meta.env.VITE_PLATFORM_EXAMPLE ?? 'platform-default',
+  applicationName: import.meta.env.VITE_PLATFORM_APPLICATION_NAME ?? 'Platform App 2',
 })
 
 export default PlatformConfig

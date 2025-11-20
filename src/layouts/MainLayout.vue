@@ -1,9 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
-      <q-toolbar>
-        <q-toolbar-title>{{ PlatformConfig.applicationName }}</q-toolbar-title>
-      </q-toolbar>
+      <ToolbarComponent />
 
       <NoticeComponent />
     </q-header>
@@ -15,8 +13,11 @@
 </template>
 
 <script setup lang="ts">
+  import ToolbarComponent from 'src/application/Required/Application/Layout/ToolbarComponent.vue'
   import NoticeComponent from 'src/application/Platform/Notice/Application/NoticeComponent.vue'
+
   import PlatformConfig from 'src/config/platform-config'
+
   import { useMeta } from 'quasar'
 
   useMeta({

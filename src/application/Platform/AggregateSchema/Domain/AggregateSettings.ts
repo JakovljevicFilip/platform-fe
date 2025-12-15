@@ -25,11 +25,9 @@ export abstract class AggregateSettings {
   /**
    * Throws if the given config value is missing.
    */
-  protected static require<T>(value: T | undefined, keyName: string): T {
+  protected static require<T>(value: T | null | undefined, keyName: string): T {
     if (value === undefined || value === null) {
-      throw new Error(
-        `${this.AGGREGATE_NAME}: Missing required config value: ${keyName}`
-      )
+      throw new Error(`${this.AGGREGATE_NAME}: Missing required config value: ${keyName}`)
     }
     return value
   }

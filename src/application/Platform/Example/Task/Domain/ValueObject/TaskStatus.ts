@@ -7,7 +7,7 @@
  */
 
 export class TaskStatus {
-  private constructor(private readonly value: string) {}
+  private constructor(public readonly value: string) {}
 
   // Allowed statuses
   static readonly PENDING = new TaskStatus('pending')

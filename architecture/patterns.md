@@ -1,54 +1,89 @@
 # Architectural Patterns
 
 ## 1. Overview
-
-1. Defines the architectural patterns used to connect Domain and Infrastructure.
-2. Describes how factories, adapters, and adapter interfaces work together.
+Defines the architectural patterns used across the system to structure behavior, enforce boundaries, and guide how different parts of the codebase interact.
+Patterns provide consistent, repeatable solutions for connecting abstract contracts with concrete implementations while preserving clarity, flexibility, and maintainability.
 
 ## 2. Core Principles
-
-1. Patterns enforce consistent boundaries between Domain, Application, and Infrastructure.
-2. Factories resolve implementations; adapters implement domain contracts; interfaces define expected behavior.
-3. Each pattern has a specific architectural purpose and must be applied consistently.
+1. This document defines all available patterns.
+2. Each pattern provides a specific, well-defined mechanism for structuring interactions.
+3. Patterns must be applied consistently across all domains, layers, and subsystems.
+4. Patterns are implementation-agnostic and can be used anywhere in the architecture.
 
 ## 3. Rules
 
-### 3.1 Factory Pattern
+### 3.1 Provider Design Pattern
+Providers choose and return implementations.  
+They guarantee indirection, consistency, and swappability.
+Callers must never construct adapters or clients directly.
+Callers interact only with the instances returned by Providers.
 
-1. Purpose: Selects the correct adapter implementation for the current runtime context.
-2. Location: Lives in the Infrastructure layer of the domain.
-3. Responsibilities:
-   1. Imports the domain-defined adapter interface.
-   2. Constructs and returns the chosen adapter implementation.
-   3. Accepts optional configuration to switch implementations when needed.
-4. Constraints:
-   1. Adapters must be accessed exclusively through factories.
+---
 
-### 3.2 Adapter Pattern
+### 3.1.1 Factory–Adapter Pattern  
+Used when callers must remain implementation‑agnostic.
 
-1. Purpose: Provides a concrete implementation of a domain-defined adapter contract.
-2. Location: Lives in `Infrastructure/adapter`.
-3. Responsibilities:
-   1. Implements all methods defined in the adapter interface.
-   2. Keeps infrastructure-specific types internal to the adapter.
-   3. Exports a single adapter instance or class.
-4. Constraints:
-   1. The Domain layer must not import or reference any adapter implementation.
+**Purpose**  
+Hide implementation details (e.g., HTTP, logging, parsing).
 
-### 3.3 Adapter Interface Pattern
+**When to Use**  
+Generic behavior; caller should not interact with vendor types.
 
-1. Definition Location: Defined in the Domain layer inside the aggregate file.
-2. Role: Describes the full contract that adapter implementations must satisfy.
-3. Naming Rules:
-   1. Default name equals the aggregate name (e.g., `Storage`).
-   2. When multiple adapters exist, use `{Aggregate}Adapter`.
-   3. Do not include the word "Interface" in the name.
-4. Guidance:
-   1. Document expected behavior for each method.
-   2. Keep interfaces focused strictly on business capabilities.
+**Structure**
+```
+{Contract}.ts
+{contract}-factory.ts
+{impl}-adapter.ts
+```
+
+**Naming**
+- Contract: `{Contract}.ts`
+- Factory: `{contract}-factory.ts`
+- Adapter: `{name}-adapter.ts`
+- Never use “Interface”
+
+**Responsibilities**
+- Factory selects and returns an adapter.
+- Adapter implements the contract and hides vendor specifics.
+
+---
+
+### 3.1.2 Maker–Client Pattern  
+Used when callers *should* be implementation-aware.
+
+**Purpose**  
+Expose implementation-specific capabilities (ORMs, SDKs, filesystem).
+
+**When to Use**  
+Caller must interact with vendor features (Dexie schema, Firebase types, etc.).
+
+**Structure**
+```
+{Contract}.ts
+{contract}-maker.ts
+{impl}-client.ts
+{aggregate}-{impl}.ts
+```
+
+**Naming**
+- Contract: `{Contract}.ts`
+- Maker: `{contract}-maker.ts`
+- Client: `{client}-client.ts`
+- Vendor file: `{name}-{client}.ts`
+
+**Responsibilities**
+- Maker selects a client.
+- Client performs real operations exposing vendor types.
+
+---
+
+### 3.1.3 Global Constraints
+1. All implementations are obtained through Providers.  
+2. Callers never instantiate implementations directly.  
+3. Providers must return objects conforming to contracts.  
+4. Pattern applies universally across all layers/domains.
 
 ## 4. Reference
 
 ### 4.1 Change Log
-
-1. v1.0 — Initial conversion to Markdown.
+v0 — Initial version.

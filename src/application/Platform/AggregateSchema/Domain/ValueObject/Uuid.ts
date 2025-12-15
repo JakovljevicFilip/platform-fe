@@ -6,7 +6,7 @@
  */
 
 export class Uuid {
-  private readonly value: string
+  public readonly value: string
 
   constructor(value: string) {
     if (!Uuid.isValid(value)) {
@@ -24,9 +24,7 @@ export class Uuid {
   }
 
   static isValid(value: string): boolean {
-    return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
-      value,
-    )
+    return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value)
   }
 
   toString(): string {

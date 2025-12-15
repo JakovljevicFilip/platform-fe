@@ -8,12 +8,15 @@
  *   parsed entities or hydrated view-models.
  */
 import { type Task } from '../Domain/Task'
+import { type ParsedTask } from './Types/ParsedTask'
 
 import { defineStore } from 'pinia'
 
 export const useTaskStore = defineStore('TaskStore', {
   state: () => ({
     tasks: [] as Task[],
+    // TODO: Remove parsedTask property and everything related to it after storage is added.
+    parsedTasks: [] as ParsedTask[],
   }),
 
   actions: {
@@ -31,6 +34,10 @@ export const useTaskStore = defineStore('TaskStore', {
 
     setAll(tasks: Task[]) {
       this.tasks = tasks
+    },
+
+    setParsed(tasks: ParsedTask[]) {
+      this.parsedTasks = tasks
     },
   },
 })

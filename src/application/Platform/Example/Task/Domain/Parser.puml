@@ -1,0 +1,16 @@
+@startuml
+title Parser Flow (AggregateSchema)
+
+/'
+Flow:
+  Infrastructure → Domain Entities
+  Application Parser:
+      AggregateEntity → ParsedApplicationEntity
+'/
+
+Infrastructure --> Application : AggregateEntity[]
+Application --> Parser : AggregateEntity[]
+
+Parser --> Application : ParsedApplicationEntity[]
+
+@enduml

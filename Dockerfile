@@ -2,15 +2,15 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# Copy only dependency manifests (cache-friendly)
+# cache-friendly deps layer
 COPY package*.json ./
+RUN npm install --ignore-scripts
 
-# Install dependencies
-RUN npm install
-
-# Copy the rest of the source code
+# now copy the actual Quasar project
 COPY . .
 
-EXPOSE 9000
+# run quasar prepare now that quasar.config + src exist
+RUN npm run postinstall
 
+EXPOSE 9000
 CMD ["npm", "run", "dev"]

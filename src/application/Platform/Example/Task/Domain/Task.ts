@@ -8,7 +8,9 @@
 import { type TaskId } from './ValueObject/TaskId'
 import type { TaskStatus } from './ValueObject/TaskStatus'
 
-export class Task {
+import { type AggregateEntity } from 'src/application/Platform/AggregateSchema/Domain/AggregateEntity'
+
+export class Task implements AggregateEntity {
   constructor(
     public readonly id: TaskId,
     public readonly body: string,

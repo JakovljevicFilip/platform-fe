@@ -4,4 +4,6 @@
  * Canonical entity type representing the data owned by an Aggregate.
  * Concrete aggregates define their own fields.
  */
-export type AggregateEntity = object
+
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface AggregateEntity {}

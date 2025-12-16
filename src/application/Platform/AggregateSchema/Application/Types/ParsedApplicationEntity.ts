@@ -12,7 +12,7 @@ export type ApplicationEntity = object
 /**
  * ParsedApplicationEntity
  * -----------------------------------------------------------------------------
- * Aggregate + Application pair.
+ * Shape of an entity used in the application layer.
  *
  * ApplicationLayer ALWAYS works with this bundle:
  *   - aggregate: AggregateEntity (canonical domain model)

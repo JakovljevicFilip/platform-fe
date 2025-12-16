@@ -2,11 +2,14 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# Copy whole project first so Quasar has context
-COPY . .
+# Copy only dependency manifests (cache-friendly)
+COPY package*.json ./
 
-# Install deps AFTER copying project
+# Install dependencies
 RUN npm install
+
+# Copy the rest of the source code
+COPY . .
 
 EXPOSE 9000
 

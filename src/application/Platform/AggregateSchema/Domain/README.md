@@ -16,19 +16,20 @@ any microservice or business domain.
 ````
 /src/application/Platform/AggregateSchema/
  ├─ Domain/
- │   ├─ AggregateEntity.ts            # Canonical aggregate entity interface
- │   ├─ Aggregate.ts                  # Base class for all aggregates (rebuild)
- │   ├─ AggregateSettings.ts          # Global base for aggregate configuration
- │   ├─ AggregateRepository.ts        # Domain-level persistence contract
- │   ├─ AggregateError.ts             # Error handler for aggregate failures
+ │   ├─ AggregateEntity.ts             # Canonical aggregate entity interface
+ │   ├─ Aggregate.ts                   # Base class for all aggregates (rebuild)
+ │   ├─ AggregateSettings.ts           # Global base for aggregate configuration
+ │   ├─ AggregateRepository.ts         # Domain-level persistence contract
+ │   ├─ AggregateError.ts              # Error handler for aggregate failures
  │   ├─ ValueObject/
- │   │   └─ Uuid.ts                   # UUID value object
- │   ├─ Parser.puml                   # Parsing workflow diagram
- │   ├─ Committer.puml                # Commit workflow diagram
- │   └─ README.md                     # Documentation for the entire AggregateSchema module
+ │   │   └─ Uuid.ts                    # UUID value object
+ │   ├─ Parser.puml                    # Parsing workflow diagram
+ │   ├─ Committer.puml                 # Commit workflow diagram
+ │   └─ README.md                      # Documentation for the entire AggregateSchema module
  └─ Application/
      └─ Types/
-         └─ ParsedApplicationEntity.ts# Shape of an entity used in the application layer.
+         ├─ ApplicationEntity.ts       # Shape of an entity used in the Application layer.
+         └─ ParsedApplicationEntity.ts # Aggregate+Application pair used throughout the Application layer
 ````
 
 ## 3. Purpose

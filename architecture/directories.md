@@ -28,6 +28,7 @@
 
 1. Contains Quasar boot files executed before the application initializes.
 2. Used for registering plugins, global services, or configuration.
+3. Application-specific boot processes/runners are registered through the Platform/Runner aggregate.
 
 ### 3.3 src/config — Configuration Layer
 

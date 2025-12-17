@@ -1,13 +1,5 @@
-/**
- * ApplicationEntity
- * -----------------------------------------------------------------------------
- * UI-facing model paired with a domain entity.
- * Concrete aggregates extend this interface.
- */
-
 import { type AggregateEntity } from 'src/application/Platform/AggregateSchema/Domain/AggregateEntity'
-
-export type ApplicationEntity = object
+import { type ApplicationEntity } from './ApplicationEntity'
 
 /**
  * ParsedApplicationEntity

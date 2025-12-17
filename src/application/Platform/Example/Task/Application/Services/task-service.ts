@@ -1,17 +1,22 @@
+import { type NewTask } from '../Types/NewTask'
 import { type ParsedTask } from '../Types/ParsedTask'
-import { useTaskStore } from '../task-store'
+
 import { taskCommitter } from './task-committer'
 import { taskParser } from './task-parser'
+import { useTaskStore } from '../task-store'
+
+import { taskStorage } from '../../Infrastructure/task-storage'
 
 import { write as log } from 'src/application/Platform/Log/Application/log-service'
 
 export const taskService = {
   // QUERY
-  list() {
+  async list(): Promise<void> {
     try {
+      const tasks = await taskStorage.findAll()
+      const parsed = taskParser.parseMany(tasks)
       const store = useTaskStore()
-      const parsed = taskParser.parseMany(store.tasks)
-      store.setParsed(parsed)
+      store.set(parsed)
     } catch (error) {
       log({
         context: 'TaskService.list',
@@ -22,26 +27,24 @@ export const taskService = {
   },
 
   // COMMANDS
-  create(body: string) {
+  async create(newTask: NewTask): Promise<void> {
     try {
-      const store = useTaskStore()
-      const created = taskCommitter.record(body)
-      store.add(created)
+      const created = taskCommitter.record(newTask)
+      await taskStorage.save(created)
     } catch (error) {
       log({
         context: 'TaskService.create',
-        body,
+        newTask,
         error,
       })
       throw error
     }
   },
 
-  update(parsedTask: ParsedTask) {
+  async update(parsedTask: ParsedTask): Promise<void> {
     try {
-      const store = useTaskStore()
       const updated = taskCommitter.update(parsedTask)
-      store.update(updated)
+      await taskStorage.update(updated)
     } catch (error) {
       log({
         context: 'TaskService.update',
@@ -52,11 +55,10 @@ export const taskService = {
     }
   },
 
-  remove(parsedTask: ParsedTask) {
+  async remove(parsedTask: ParsedTask): Promise<void> {
     try {
-      const store = useTaskStore()
       const removed = taskCommitter.remove(parsedTask)
-      store.remove(removed)
+      await taskStorage.remove(removed)
     } catch (error) {
       log({
         context: 'TaskService.remove',

@@ -9,8 +9,8 @@ import type { Task } from './Task'
 import { type AggregateRepository } from 'src/application/Platform/AggregateSchema/Domain/AggregateRepository'
 
 export interface TaskRepository extends AggregateRepository {
-  save(task: Task): Promise<void>
-  update(task: Task): Promise<void>
-  remove(task: Task): Promise<void>
+  save(task: Task): Promise<string>
+  update(task: Task): Promise<string>
+  remove(task: Task): Promise<string>
   findAll(): Promise<Task[]>
 }

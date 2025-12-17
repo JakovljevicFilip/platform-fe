@@ -73,28 +73,39 @@
     return trimmedLength.value >= min && trimmedLength.value <= max && !isSubmitting.value
   })
 
-  function confirm(): void {
+  async function confirm(): Promise<void> {
     if (!props.task || !canSubmit.value) return
 
     try {
       isSubmitting.value = true
 
-      taskService.update({
+      await update({
         ...props.task,
         application: {
           ...props.task.application,
           editBody: body.value.trim(),
         },
       })
-
-      model.value = false
-      taskService.list()
-      notify.success('Task updated successfully.')
-      taskService.list()
     } catch {
       notify.warning('Task update failed. Please try again.')
     } finally {
       isSubmitting.value = false
+    }
+
+    await list()
+  }
+
+  async function update(task: ParsedTask): Promise<void> {
+    await taskService.update(task)
+    model.value = false
+    notify.success('Task updated successfully.')
+  }
+
+  async function list(): Promise<void> {
+    try {
+      await taskService.list()
+    } catch {
+      notify.warning('Task listing failed. Please try again.')
     }
   }
 

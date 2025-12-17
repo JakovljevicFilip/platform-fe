@@ -1,7 +1,9 @@
-import { StorageMaker } from 'src/application/Platform/Storage/Infrastructure/storage-maker'
-import { TaskDexie } from './Client/task-dexie'
 import type { Task } from '../Domain/Task'
 import type { TaskRepository } from '../Domain/TaskRepository'
+import type { TaskId } from '../Domain/ValueObject/TaskId'
+
+import { StorageMaker } from 'src/application/Platform/Storage/Infrastructure/storage-maker'
+import { TaskDexie } from './Client/task-dexie'
 
 class TaskStorage implements TaskRepository {
   private readonly repo: TaskRepository
@@ -23,6 +25,10 @@ class TaskStorage implements TaskRepository {
   }
   findAll(): Promise<Task[]> {
     return this.repo.findAll()
+  }
+
+  findOneById(id: TaskId): Promise<Task | null> {
+    return this.repo.findOneById(id)
   }
 }
 

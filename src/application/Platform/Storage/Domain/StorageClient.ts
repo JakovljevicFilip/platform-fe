@@ -1,8 +1,10 @@
 /**
  * StorageClient
  * -----------------------------------------------------------------------------
- * Marker contract for all storage clients (Dexie, SQLite, LocalStorage, etc.).
+ * Closed union of known storage capabilities. (Dexie, SQLite, LocalStorage, etc.).
  */
-export interface StorageClient {
-  readonly CLIENT_NAME: string
-}
+
+import type { DexieStorageClient } from '../Dexie/Domain/DexieStorageClient'
+
+export type StorageClient = DexieStorageClient
+// | SQLiteStorageClient

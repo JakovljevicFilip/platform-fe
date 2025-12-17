@@ -11,14 +11,14 @@
  *
  * All operations delegate directly to DexieAggregate.
  */
-import type Dexie from 'dexie'
-
-import type { StorageClient } from '../../Domain/StorageClient'
 import type { DexieRepository, DexieORM } from '../Domain/DexieRepository'
 import { DexieAggregate } from '../Domain/DexieAggregate'
 import { assertDexieORM, assertPrimaryKey } from './invariant-helper'
+import type { DexieStorageClient } from '../Domain/DexieStorageClient'
 
-export class DexieClient implements StorageClient, DexieRepository {
+import type Dexie from 'dexie'
+
+export class DexieClient implements DexieStorageClient, DexieRepository {
   readonly CLIENT_NAME = 'dexie'
 
   private db: Dexie

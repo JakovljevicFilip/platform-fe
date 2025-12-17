@@ -56,12 +56,4 @@ export const taskRules = {
       throw new TaskError('Cannot remove a task that is in progress.')
     }
   },
-
-  canRebuild(props: { id: unknown; body: unknown; status: unknown; created_at: unknown }): void {
-    const { id, body, status, created_at } = props
-
-    if (!id || !body || !status || !created_at) {
-      throw new TaskError('Missing required fields while rebuilding Task.', props)
-    }
-  },
 }

@@ -40,19 +40,33 @@
   const body = ref('')
   const isSubmitting = ref(false)
 
-  function submit(): void {
+  async function submit(): Promise<void> {
     if (!canSubmit.value) return
 
     try {
       isSubmitting.value = true
-      taskService.create(body.value.trim())
-      body.value = ''
-      notify.success('Task created successfully.')
-      taskService.list()
+      await create()
     } catch {
       notify.warning('Task creation failed. Please try again.')
     } finally {
       isSubmitting.value = false
+    }
+
+    await list()
+  }
+
+  async function create(): Promise<void> {
+    const newTask = { body: body.value.trim() }
+    await taskService.create(newTask)
+    body.value = ''
+    notify.success('Task created successfully.')
+  }
+
+  async function list(): Promise<void> {
+    try {
+      await taskService.list()
+    } catch {
+      notify.warning('Task listing failed. Please try again.')
     }
   }
 

@@ -6,15 +6,16 @@
 import type { ParsedTask } from '../Types/ParsedTask'
 
 import { TaskAggregate } from '../../Domain/TaskAggregate'
-import type { Task } from '../../Domain/Task'
+import { type Task } from '../../Domain/Task'
+import { type NewTask } from '../Types/NewTask'
 
 export const taskCommitter = {
   /**
    * Create a new task.
    * No currentCount needed anymore.
    */
-  record(body: string): Task {
-    return TaskAggregate.record(body)
+  record(newTask: NewTask): Task {
+    return TaskAggregate.record(newTask.body)
   },
 
   /**

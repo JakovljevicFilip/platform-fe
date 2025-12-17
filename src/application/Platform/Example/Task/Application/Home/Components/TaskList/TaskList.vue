@@ -34,15 +34,16 @@
 </template>
 
 <script setup lang="ts">
+  import { taskService } from '../../../Services/task-service'
   import { useTaskStore } from '../../../task-store'
   import type { ParsedTask } from '../../../Types/ParsedTask'
   import ChangeTaskDialog from './Components/ChangeTaskDialog.vue'
   import RemoveTaskDialog from './Components/RemoveTaskDialog.vue'
 
-  import { ref, computed } from 'vue'
+  import { ref, computed, onMounted } from 'vue'
 
   const store = useTaskStore()
-  const tasks = computed(() => store.parsedTasks)
+  const tasks = computed(() => store.tasks)
 
   const formatDate = (date: Date): string =>
     new Intl.DateTimeFormat('en-GB', {
@@ -68,4 +69,8 @@
     taskToEdit.value = task
     showEditDialog.value = true
   }
+
+  onMounted(async () => {
+    await taskService.list()
+  })
 </script>

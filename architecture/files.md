@@ -58,6 +58,8 @@
    1. UI-facing type defining view-model data structures.
 7. Parsed Application Entity (Parsed{ApplicationEntity}.ts)  
    1. Bundles AggregateEntity + ApplicationEntity into a single parsed model.
+8. Runner ({feature}-run.ts)
+   1.  Execution unit implementing Runner.
 
 #### 3.3.3 Infrastructure Layer Schema
 1. Repository Implementation ({aggregate}-repository.ts)

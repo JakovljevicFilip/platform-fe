@@ -46,6 +46,7 @@
 ### 3.5 Application–Infrastructure Collaboration
 
 1. When the Application layer collaborates with the Infrastructure layer, all interaction must occur through a service module defined in the Application layer.
+2. Run processes defined in the Application layer may consume resources from the Infrastructure layer.
 
 ### 3.6 Optional Layering
 

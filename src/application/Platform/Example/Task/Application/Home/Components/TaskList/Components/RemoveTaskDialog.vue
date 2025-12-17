@@ -50,19 +50,31 @@
     set: (value: boolean) => emit('update:modelValue', value),
   })
 
-  function confirm(): void {
+  async function confirm(): Promise<void> {
     if (!props.task) return
 
     try {
       isSubmitting.value = true
-      taskService.remove(props.task)
-      model.value = false
-      notify.success('Task removed.')
-      taskService.list()
+      await remove(props.task)
     } catch {
       notify.warning('Task removal failed. Please try again.')
     } finally {
       isSubmitting.value = false
+    }
+    await list()
+  }
+
+  async function remove(task: ParsedTask): Promise<void> {
+    await taskService.remove(task)
+    model.value = false
+    notify.success('Task removed.')
+  }
+
+  async function list(): Promise<void> {
+    try {
+      await taskService.list()
+    } catch {
+      notify.warning('Task listing failed. Please try again.')
     }
   }
 </script>

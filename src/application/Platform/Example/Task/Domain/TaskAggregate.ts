@@ -10,6 +10,7 @@ import { TaskId } from './ValueObject/TaskId'
 import { Task } from './Task'
 
 import { Aggregate } from 'src/application/Platform/AggregateSchema/Domain/Aggregate'
+import { taskRebuildRule } from './Rules/task-rebuild'
 
 export class TaskAggregate extends Aggregate<Task> {
   static record(body: string): Task {
@@ -18,14 +19,20 @@ export class TaskAggregate extends Aggregate<Task> {
     return new Task(TaskId.generate(), body.trim(), TaskStatus.PENDING, new Date())
   }
 
-  override rebuild(id: string, body: string, status: string, created_at: string): Task {
-    taskRules.canRebuild({ id, body, status, created_at })
+  override rebuild(id: string, body: unknown, status: unknown, created_at: unknown): Task {
+    const props: {
+      body: unknown
+      status: unknown
+      created_at: unknown
+    } = { body, status, created_at }
+
+    taskRebuildRule.canRebuild(props)
 
     return new Task(
       TaskId.fromString(id),
-      body,
-      TaskStatus.fromString(status),
-      new Date(created_at)
+      props.body,
+      TaskStatus.fromString(props.status),
+      props.created_at
     )
   }
 

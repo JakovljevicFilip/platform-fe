@@ -46,4 +46,9 @@ export class TaskAggregate extends Aggregate<Task> {
     taskRules.canRemove(task.status)
     return task
   }
+
+  static createRunnerExampleTask(): Task {
+    const id = TaskId.fromString('3b858f65-cbb3-4d98-ba38-400ea8e99727')
+    return new Task(id, 'This task was made by a run process.', TaskStatus.PENDING, new Date())
+  }
 }

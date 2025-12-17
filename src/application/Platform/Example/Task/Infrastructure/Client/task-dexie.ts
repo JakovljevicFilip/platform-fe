@@ -11,8 +11,9 @@
 import type { TaskRepository } from '../../Domain/TaskRepository'
 import { TaskAggregate } from '../../Domain/TaskAggregate'
 import type { Task } from '../../Domain/Task'
+import type { TaskId } from '../../Domain/ValueObject/TaskId'
 
-import { type DexieRepository } from 'src/application/Platform/Storage/Dexie/Domain/DexieRepository'
+import type { DexieRepository } from 'src/application/Platform/Storage/Dexie/Domain/DexieRepository'
 
 export class TaskDexie implements TaskRepository {
   constructor(private readonly client: DexieRepository) {}
@@ -48,5 +49,14 @@ export class TaskDexie implements TaskRepository {
 
     const aggregate = new TaskAggregate()
     return rows.map(row => aggregate.rebuild(row.id, row.body, row.status, row.created_at))
+  }
+
+  async findOneById(id: TaskId): Promise<Task | null> {
+    const row = await this.client.findOneById(id.toString())
+    const aggregate = new TaskAggregate()
+    if (row === null) {
+      return row
+    }
+    return aggregate.rebuild(row.id, row.body, row.status, row.created_at)
   }
 }

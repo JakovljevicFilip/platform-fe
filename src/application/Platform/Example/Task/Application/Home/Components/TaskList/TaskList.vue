@@ -34,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-  import { taskService } from '../../../Services/task-service'
+  import { taskService } from '../../../Service/task-service'
   import { useTaskStore } from '../../../task-store'
   import type { ParsedTask } from '../../../Types/ParsedTask'
   import ChangeTaskDialog from './Components/ChangeTaskDialog.vue'

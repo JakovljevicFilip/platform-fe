@@ -30,12 +30,12 @@
 </template>
 
 <script setup lang="ts">
-  import { taskService } from '../../Services/task-service'
   import { TaskSettings } from '../../../Domain/TaskSettings'
 
   import { notify } from 'src/application/Platform/Notification/InApp/Application/inAppNotification-service'
 
   import { ref, computed } from 'vue'
+  import { taskService } from '../../Service/task-service'
 
   const body = ref('')
   const isSubmitting = ref(false)
@@ -45,28 +45,14 @@
 
     try {
       isSubmitting.value = true
-      await create()
+      const newTask = { body: body.value.trim() }
+      await taskService.create(newTask)
+      body.value = ''
+      notify.success('Task created successfully.')
     } catch {
       notify.warning('Task creation failed. Please try again.')
     } finally {
       isSubmitting.value = false
-    }
-
-    await list()
-  }
-
-  async function create(): Promise<void> {
-    const newTask = { body: body.value.trim() }
-    await taskService.create(newTask)
-    body.value = ''
-    notify.success('Task created successfully.')
-  }
-
-  async function list(): Promise<void> {
-    try {
-      await taskService.list()
-    } catch {
-      notify.warning('Task listing failed. Please try again.')
     }
   }
 

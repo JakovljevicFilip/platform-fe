@@ -36,8 +36,9 @@
 
 <script setup lang="ts">
   import { TaskSettings } from 'src/application/Platform/Example/Task/Domain/TaskSettings'
-  import { taskService } from '../../../../Services/task-service'
   import { type ParsedTask } from '../../../../Types/ParsedTask'
+
+  import { taskService } from '../../../../Service/task-service'
 
   import { notify } from 'src/application/Platform/Notification/InApp/Application/inAppNotification-service'
 
@@ -78,34 +79,19 @@
 
     try {
       isSubmitting.value = true
-
-      await update({
+      await taskService.update({
         ...props.task,
         application: {
           ...props.task.application,
           editBody: body.value.trim(),
         },
       })
+      model.value = false
+      notify.success('Task updated successfully.')
     } catch {
       notify.warning('Task update failed. Please try again.')
     } finally {
       isSubmitting.value = false
-    }
-
-    await list()
-  }
-
-  async function update(task: ParsedTask): Promise<void> {
-    await taskService.update(task)
-    model.value = false
-    notify.success('Task updated successfully.')
-  }
-
-  async function list(): Promise<void> {
-    try {
-      await taskService.list()
-    } catch {
-      notify.warning('Task listing failed. Please try again.')
     }
   }
 

@@ -27,8 +27,9 @@
 </template>
 
 <script setup lang="ts">
-  import { taskService } from '../../../../Services/task-service'
   import { type ParsedTask } from '../../../../Types/ParsedTask'
+
+  import { taskService } from '../../../../Service/task-service'
 
   import { notify } from 'src/application/Platform/Notification/InApp/Application/inAppNotification-service'
 
@@ -55,26 +56,13 @@
 
     try {
       isSubmitting.value = true
-      await remove(props.task)
+      await taskService.remove(props.task)
+      model.value = false
+      notify.success('Task removed.')
     } catch {
       notify.warning('Task removal failed. Please try again.')
     } finally {
       isSubmitting.value = false
-    }
-    await list()
-  }
-
-  async function remove(task: ParsedTask): Promise<void> {
-    await taskService.remove(task)
-    model.value = false
-    notify.success('Task removed.')
-  }
-
-  async function list(): Promise<void> {
-    try {
-      await taskService.list()
-    } catch {
-      notify.warning('Task listing failed. Please try again.')
     }
   }
 </script>

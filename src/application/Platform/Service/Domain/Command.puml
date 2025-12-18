@@ -1,0 +1,11 @@
+@startuml
+title Command Flow
+
+UI --> Service : ParsedApplicationEntity
+Service --> Committer: ParsedApplicationEntity
+Committer --> Aggregate : extracted raw values
+Aggregate --> Committer : AggregateEntity
+Committer --> Service : AggregateEntity
+Service --> Repository : AggregateEntity
+
+@enduml

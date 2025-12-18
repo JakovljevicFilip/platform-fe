@@ -5,11 +5,11 @@
  * Application entity contains only UI-facing values in camelCase.
  */
 
-import type { Task } from '../../Domain/Task'
+import type { Parser } from 'src/application/Platform/Service/Domain/CQRS/Query/Parser'
+import type { Task } from '../../../../Domain/Task'
+import type { ParsedTask, TaskApplicationEntity } from '../../../Types/ParsedTask'
 
-import type { ParsedTask, TaskApplicationEntity } from '../Types/ParsedTask'
-
-export const taskParser = {
+class TaskParser implements Parser {
   parseOne(aggregate: Task): ParsedTask {
     const application: TaskApplicationEntity = {
       id: aggregate.id.toString(),
@@ -24,9 +24,11 @@ export const taskParser = {
     }
 
     return { aggregate, application }
-  },
+  }
 
   parseMany(aggregates: Task[]): ParsedTask[] {
     return aggregates.map(t => this.parseOne(t))
-  },
+  }
 }
+
+export const taskParser = new TaskParser()

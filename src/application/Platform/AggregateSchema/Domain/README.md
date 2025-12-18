@@ -23,8 +23,6 @@ any microservice or business domain.
  │   ├─ AggregateError.ts              # Error handler for aggregate failures
  │   ├─ ValueObject/
  │   │   └─ Uuid.ts                    # UUID value object
- │   ├─ Parser.puml                    # Parsing workflow diagram
- │   ├─ Committer.puml                 # Commit workflow diagram
  │   └─ README.md                      # Documentation for the entire AggregateSchema module
  └─ Application/
      └─ Types/
@@ -71,12 +69,6 @@ data**.
 -   `ParsedApplicationEntity` --- bundle containing:
     -   the canonical `AggregateEntity`
     -   the UI-facing `ApplicationEntity`
-
-### UML Diagrams
-
--   **Parser.puml** --- maps AggregateEntity → ParsedApplicationEntity\
--   **Committer.puml** --- maps ParsedApplicationEntity →
-    AggregateEntity via Aggregate
 
 ## 4. Usage
 

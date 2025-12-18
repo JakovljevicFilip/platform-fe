@@ -1,0 +1,11 @@
+@startuml
+title Query Flow
+
+UI --> Service : request
+Service --> Repository: request
+Repository --> Service: AggregateEntity
+Service --> Query: AggregateEntity
+Query --> Service: ApplicationEntity
+Service --> Store: ApplicationEntity
+
+@enduml

@@ -64,6 +64,8 @@
    1. Bundles AggregateEntity + ApplicationEntity into a single parsed model.
 9. Runner ({feature}-run.ts)
    1.  Execution unit implementing Runner.
+10. Composable (use{Functionality}.ts)
+   1. Vue composable encapsulating reusable reactive application behavior.
 
 #### 3.3.3 Infrastructure Layer Schema
 

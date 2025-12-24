@@ -36,6 +36,7 @@
 
   import { ref, computed } from 'vue'
   import { taskService } from '../../Service/task-service'
+  import { useTrimmedLength } from './Composable/useTrimmedLength'
 
   const body = ref('')
   const isSubmitting = ref(false)
@@ -65,8 +66,10 @@
     (val: string) => val.trim().length <= max || `Maximum ${max} characters`,
   ]
 
-  const trimmedLength = computed(() => body.value.trim().length)
-  const canSubmit = computed(() => {
-    return trimmedLength.value >= min && trimmedLength.value <= max && !isSubmitting.value
+  const { isValidLength } = useTrimmedLength(body, {
+    min: TaskSettings.minBodyLength,
+    max: TaskSettings.maxBodyLength,
   })
+
+  const canSubmit = computed(() => isValidLength.value && !isSubmitting.value)
 </script>

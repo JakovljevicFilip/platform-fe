@@ -8,74 +8,37 @@
  * Contains no domain logger.writeic and owns no persistence.
  */
 
-import type { ParsedTask } from '../Types/ParsedTask'
-import type { NewTask } from '../Types/NewTask'
-
 import { useTaskStore } from '../task-store'
 
-import { taskCreate } from './CQRS/Command/task-create'
-import { taskUpdate } from './CQRS/Command/task-update'
-import { taskRemove } from './CQRS/Command/task-remove'
+import { taskAddHandler } from './CQRS/Command/Add/add-handler'
+import { taskChangeHandler } from './CQRS/Command/Change/change-handler'
+import { taskRemoveHandler } from './CQRS/Command/Remove/remove-handler'
 
-import { taskList } from './CQRS/Query/task-list'
-import { logger } from 'src/application/Platform/Log/Application/log-service'
+import { taskListHandler } from './CQRS/Query/List/list-handler'
+
+import type { Task } from '../../Domain/Task'
 
 export const taskService = {
   // COMMANDS
-  async create(newTask: NewTask): Promise<void> {
-    try {
-      await taskCreate.command(newTask)
-    } catch (error) {
-      logger.write({
-        context: 'TaskService.create',
-        newTask,
-        error,
-      })
-      throw error
-    }
+  async add(content: string): Promise<void> {
+    await taskAddHandler.add(content)
     await this.list()
   },
 
-  async update(parsedTask: ParsedTask): Promise<void> {
-    try {
-      await taskUpdate.command(parsedTask)
-    } catch (error) {
-      logger.write({
-        context: 'TaskService.update',
-        parsedTask,
-        error,
-      })
-      throw error
-    }
+  async change(task: Task, changedBody: string): Promise<void> {
+    await taskChangeHandler.change(task, changedBody)
     await this.list()
   },
 
-  async remove(parsedTask: ParsedTask): Promise<void> {
-    try {
-      await taskRemove.command(parsedTask)
-    } catch (error) {
-      logger.write({
-        context: 'TaskService.create',
-        parsedTask,
-        error,
-      })
-      throw error
-    }
+  async remove(task: Task): Promise<void> {
+    await taskRemoveHandler.remove(task)
     await this.list()
   },
 
   // QUERY
   async list(): Promise<void> {
-    try {
-      const parsed = await taskList.list()
-      const store = useTaskStore()
-      store.set(parsed)
-    } catch (error) {
-      logger.write({
-        context: 'TaskService.list',
-        error,
-      })
-      throw error
-    }
+    const tasks = await taskListHandler.list()
+    const store = useTaskStore()
+    store.set(tasks)
   },
 }

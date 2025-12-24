@@ -14,7 +14,7 @@
           :rows="4"
           input-style="resize: none"
           placeholder="Edit task…"
-          :rules="rules"
+          :rules="taskInput.content.rules"
         />
       </q-card-section>
 
@@ -35,11 +35,12 @@
 </template>
 
 <script setup lang="ts">
-  import { useTrimmedLength } from '../../Composable/useTrimmedLength'
+  import { useAsyncSubmitState } from '../../Composable/useAsyncSubmitState'
+  import { taskInput } from '../../Input/task-input'
+
   import { taskService } from '../../../../Service/task-service'
 
   import type { Task } from 'src/application/Platform/Example/Task/Domain/Task'
-  import { TaskSettings } from 'src/application/Platform/Example/Task/Domain/TaskSettings'
 
   import { notify } from 'src/application/Platform/Notification/InApp/Application/inAppNotification-service'
 
@@ -53,41 +54,21 @@
     default: null,
   })
 
-  const isSubmitting = ref(false)
   const body = ref('')
 
-  const min = TaskSettings.minBodyLength
-  const max = TaskSettings.maxBodyLength
+  const canSubmit = computed(() => taskInput.content.isValid(body.value) && !isSubmitting.value)
 
-  const { isValidLength } = useTrimmedLength(body, {
-    min,
-    max,
-  })
-
-  const canSubmit = computed(() => {
-    return isValidLength.value && !isSubmitting.value
-  })
+  const { isSubmitting, run } = useAsyncSubmitState()
 
   async function confirm(): Promise<void> {
     if (!task) return
 
-    try {
-      isSubmitting.value = true
+    await run(async () => {
       await taskService.change(task, body.value)
       notify.success('Task updated successfully.')
       close()
-    } catch {
-      notify.warning('Task update failed. Please try again.')
-    } finally {
-      isSubmitting.value = false
-    }
+    })
   }
-
-  const rules = [
-    (val: string) => (!!val && val.trim().length > 0) || 'Task body is required',
-    (val: string) => val.trim().length >= min || `Minimum ${min} characters`,
-    (val: string) => val.trim().length <= max || `Maximum ${max} characters`,
-  ]
 
   function beforeShow() {
     if (task) body.value = task.body

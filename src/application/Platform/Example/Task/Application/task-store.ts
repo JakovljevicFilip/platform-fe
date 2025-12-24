@@ -3,6 +3,8 @@
  * -----------------------------------------------------------------------------
  * Application-level state store for Task ParsedApplicationEntities.
  */
+
+// TODO: Remove references to ParsedApplication entities.
 import type { Task } from '../Domain/Task'
 
 import { defineStore } from 'pinia'

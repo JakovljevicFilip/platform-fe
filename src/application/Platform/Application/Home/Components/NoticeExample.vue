@@ -52,9 +52,19 @@
 
   function showExampleNotices() {
     const domainNotices = new DomainNotices('Example', [
-      new Notice('Example Info', 'This is a sample info notice.', Style.info),
-      new Notice('Example Warning', 'This is a sample warning notice.', Style.warning),
-      new Notice('Example Danger', 'This is a sample danger notice.', Style.danger),
+      new Notice('example_info', 'Example Info', 'This is a sample info notice.', Style.info),
+      new Notice(
+        'example_warning',
+        'Example Warning',
+        'This is a sample warning notice.',
+        Style.warning
+      ),
+      new Notice(
+        'example_danger',
+        'Example Danger',
+        'This is a sample danger notice.',
+        Style.danger
+      ),
     ])
 
     notice.setDomainNotices(domainNotices)

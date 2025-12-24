@@ -14,6 +14,7 @@ export enum Style {
 /** Represents a single notice message */
 export class Notice {
   constructor(
+    public scenario: string,
     public title: string,
     public subtitle: string,
     public style: Style

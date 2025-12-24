@@ -30,13 +30,14 @@
 </template>
 
 <script setup lang="ts">
+  import { useTrimmedLength } from './Composable/useTrimmedLength'
+
   import { TaskSettings } from '../../../Domain/TaskSettings'
 
   import { notify } from 'src/application/Platform/Notification/InApp/Application/inAppNotification-service'
+  import { taskService } from '../../Service/task-service'
 
   import { ref, computed } from 'vue'
-  import { taskService } from '../../Service/task-service'
-  import { useTrimmedLength } from './Composable/useTrimmedLength'
 
   const body = ref('')
   const isSubmitting = ref(false)
@@ -46,10 +47,9 @@
 
     try {
       isSubmitting.value = true
-      const newTask = { body: body.value.trim() }
-      await taskService.create(newTask)
+      await taskService.add(body.value)
       body.value = ''
-      notify.success('Task created successfully.')
+      notify.success('Task added successfully.')
     } catch {
       notify.warning('Task creation failed. Please try again.')
     } finally {

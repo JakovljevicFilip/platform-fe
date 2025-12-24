@@ -8,7 +8,7 @@
       <q-card-section>
         <div class="text-body2">Are you sure you want to remove this task?</div>
 
-        <div class="q-mt-sm text-grey-7">“{{ task?.application.body }}”</div>
+        <div class="q-mt-sm text-grey-7">“{{ task?.body }}”</div>
       </q-card-section>
 
       <q-card-actions align="right">
@@ -27,9 +27,9 @@
 </template>
 
 <script setup lang="ts">
-  import { type ParsedTask } from '../../../../Types/ParsedTask'
-
   import { taskService } from '../../../../Service/task-service'
+
+  import type { Task } from 'src/application/Platform/Example/Task/Domain/Task'
 
   import { notify } from 'src/application/Platform/Notification/InApp/Application/inAppNotification-service'
 
@@ -37,7 +37,7 @@
 
   const props = defineProps<{
     modelValue: boolean
-    task: ParsedTask | null
+    task: Task | null
   }>()
 
   const emit = defineEmits<{

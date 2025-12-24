@@ -66,6 +66,9 @@
    1.  Execution unit implementing Runner.
 10. Composable (use{Functionality}.ts)
    1. Vue composable encapsulating reusable reactive application behavior.
+11. Input Validation Helper (`{field|form|usecase}-input.ts`)
+   1.  Declarative, UI-level input validation rules and helpers used by Vue components to validate form state and derive submit eligibility.
+
 
 #### 3.3.3 Infrastructure Layer Schema
 

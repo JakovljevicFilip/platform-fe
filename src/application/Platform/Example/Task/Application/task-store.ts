@@ -3,17 +3,17 @@
  * -----------------------------------------------------------------------------
  * Application-level state store for Task ParsedApplicationEntities.
  */
-import { type ParsedTask } from './Types/ParsedTask'
+import type { Task } from '../Domain/Task'
 
 import { defineStore } from 'pinia'
 
 export const useTaskStore = defineStore('TaskStore', {
   state: () => ({
-    tasks: [] as ParsedTask[],
+    tasks: [] as Task[],
   }),
 
   actions: {
-    set(tasks: ParsedTask[]) {
+    set(tasks: Task[]) {
       this.tasks = tasks
     },
   },

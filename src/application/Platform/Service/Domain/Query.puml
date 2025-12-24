@@ -1,11 +1,15 @@
 @startuml
 title Query Flow
 
-UI --> Service : request
-Service --> Repository: request
-Repository --> Service: AggregateEntity
-Service --> Query: AggregateEntity
-Query --> Service: ApplicationEntity
-Service --> Store: ApplicationEntity
+UI --> ApplicationService : request input
+ApplicationService --> QueryHandler : query params
+QueryHandler --> Query : query params
+Query --> Repository : query params
+Repository --> Query : AggregateEntity
+Query --> QueryHandler : AggregateEntity[]
+QueryHandler --> Filter : AggregateEntity[]
+Filter --> QueryHandler : AggregateEntity[]
+QueryHandler --> ApplicationService : AggregateEntity[]
+ApplicationService --> Store : AggregateEntity[]
 
 @enduml

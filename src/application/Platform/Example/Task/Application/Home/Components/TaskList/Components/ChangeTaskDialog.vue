@@ -1,5 +1,5 @@
 <template>
-  <q-dialog v-model="model">
+  <q-dialog v-model="changeDialog" @before-show="beforeShow">
     <q-card class="q-pa-lg" style="min-width: 480px">
       <q-card-section class="q-pa-none">
         <div class="text-h6">Edit task</div>
@@ -19,7 +19,7 @@
       </q-card-section>
 
       <q-card-actions align="right" class="q-mt-md">
-        <q-btn flat label="Cancel" color="grey-7" v-close-popup />
+        <q-btn flat label="Cancel" color="grey-7" @click="close" />
 
         <q-btn
           unelevated
@@ -35,40 +35,27 @@
 </template>
 
 <script setup lang="ts">
-  import { TaskSettings } from 'src/application/Platform/Example/Task/Domain/TaskSettings'
-  import { type ParsedTask } from '../../../../Types/ParsedTask'
-
+  import { useTrimmedLength } from '../../Composable/useTrimmedLength'
   import { taskService } from '../../../../Service/task-service'
+
+  import type { Task } from 'src/application/Platform/Example/Task/Domain/Task'
+  import { TaskSettings } from 'src/application/Platform/Example/Task/Domain/TaskSettings'
 
   import { notify } from 'src/application/Platform/Notification/InApp/Application/inAppNotification-service'
 
-  import { ref, computed, watch } from 'vue'
-  import { useTrimmedLength } from '../../Composable/useTrimmedLength'
+  import { ref, computed } from 'vue'
 
-  const props = defineProps<{
-    modelValue: boolean
-    task: ParsedTask | null
+  const { task } = defineProps<{
+    task: Task | null
   }>()
 
-  const emit = defineEmits<{
-    (e: 'update:modelValue', value: boolean): void
-  }>()
+  const changeDialog = defineModel<boolean | null>({
+    default: null,
+  })
 
   const isSubmitting = ref(false)
   const body = ref('')
 
-  const model = computed({
-    get: () => props.modelValue,
-    set: (value: boolean) => emit('update:modelValue', value),
-  })
-
-  watch(
-    () => props.task,
-    task => {
-      body.value = task?.application.body ?? ''
-    },
-    { immediate: true }
-  )
   const min = TaskSettings.minBodyLength
   const max = TaskSettings.maxBodyLength
 
@@ -82,19 +69,13 @@
   })
 
   async function confirm(): Promise<void> {
-    if (!props.task || !canSubmit.value) return
+    if (!task) return
 
     try {
       isSubmitting.value = true
-      await taskService.update({
-        ...props.task,
-        application: {
-          ...props.task.application,
-          editBody: body.value.trim(),
-        },
-      })
-      model.value = false
+      await taskService.change(task, body.value)
       notify.success('Task updated successfully.')
+      close()
     } catch {
       notify.warning('Task update failed. Please try again.')
     } finally {
@@ -107,4 +88,12 @@
     (val: string) => val.trim().length >= min || `Minimum ${min} characters`,
     (val: string) => val.trim().length <= max || `Maximum ${max} characters`,
   ]
+
+  function beforeShow() {
+    if (task) body.value = task.body
+  }
+
+  function close() {
+    changeDialog.value = false
+  }
 </script>

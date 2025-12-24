@@ -6,7 +6,7 @@ import type { StorageBoot } from 'src/application/Platform/Storage/Domain/Storag
 export class DexieBoot implements StorageBoot {
   async boot(): Promise<void> {
     await applyPlatformVersions()
-    applyMicroserviceVersions()
+    await applyMicroserviceVersions()
   }
 }
 

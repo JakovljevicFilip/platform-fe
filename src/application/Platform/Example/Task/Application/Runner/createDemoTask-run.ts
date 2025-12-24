@@ -9,18 +9,18 @@
  *
  * Executed as part of a Runner-controlled execution flow.
  */
-
 import { TaskAggregate } from '../../Domain/TaskAggregate'
 import { taskStorage } from '../../Infrastructure/task-storage'
 
+import { logger } from 'src/application/Platform/Log/Application/log-service'
+
 import type { Run } from 'src/application/Platform/Runner/Domain/Run'
-import { write as log } from 'src/application/Platform/Log/Application/log-service'
 
 export const createDemoTask: Run = {
   RUN_NAME: 'Runner.Platform.Task.CreateDemo',
 
   async run() {
-    log([this.RUN_NAME, 'creating run example task'])
+    logger.write([this.RUN_NAME, 'creating run example task'])
     const exampleTask = TaskAggregate.createRunnerExampleTask()
     const storedTask = await taskStorage.findOneById(exampleTask.id)
 

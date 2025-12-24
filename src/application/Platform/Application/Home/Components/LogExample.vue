@@ -26,9 +26,9 @@
 </template>
 
 <script setup lang="ts">
-  import { write } from 'src/application/Platform/Log/Application/log-service'
+  import { logger } from 'src/application/Platform/Log/Application/log-service'
 
   function writeLog() {
-    write('This is an example platform log from the Log Module documentation.')
+    logger.write('This is an example platform log from the Log Module documentation.')
   }
 </script>

@@ -5,7 +5,7 @@
  * Composes Commands and Queries and synchronizes application state
  * with the UI store.
  *
- * Contains no domain logic and owns no persistence.
+ * Contains no domain logger.writeic and owns no persistence.
  */
 
 import type { ParsedTask } from '../Types/ParsedTask'
@@ -18,8 +18,7 @@ import { taskUpdate } from './CQRS/Command/task-update'
 import { taskRemove } from './CQRS/Command/task-remove'
 
 import { taskList } from './CQRS/Query/task-list'
-
-import { write as log } from 'src/application/Platform/Log/Application/log-service'
+import { logger } from 'src/application/Platform/Log/Application/log-service'
 
 export const taskService = {
   // COMMANDS
@@ -27,7 +26,7 @@ export const taskService = {
     try {
       await taskCreate.command(newTask)
     } catch (error) {
-      log({
+      logger.write({
         context: 'TaskService.create',
         newTask,
         error,
@@ -41,7 +40,7 @@ export const taskService = {
     try {
       await taskUpdate.command(parsedTask)
     } catch (error) {
-      log({
+      logger.write({
         context: 'TaskService.update',
         parsedTask,
         error,
@@ -55,7 +54,7 @@ export const taskService = {
     try {
       await taskRemove.command(parsedTask)
     } catch (error) {
-      log({
+      logger.write({
         context: 'TaskService.create',
         parsedTask,
         error,
@@ -72,7 +71,7 @@ export const taskService = {
       const store = useTaskStore()
       store.set(parsed)
     } catch (error) {
-      log({
+      logger.write({
         context: 'TaskService.list',
         error,
       })

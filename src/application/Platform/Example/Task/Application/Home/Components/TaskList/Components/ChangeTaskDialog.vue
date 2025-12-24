@@ -43,6 +43,7 @@
   import { notify } from 'src/application/Platform/Notification/InApp/Application/inAppNotification-service'
 
   import { ref, computed, watch } from 'vue'
+  import { useTrimmedLength } from '../../Composable/useTrimmedLength'
 
   const props = defineProps<{
     modelValue: boolean
@@ -68,10 +69,16 @@
     },
     { immediate: true }
   )
+  const min = TaskSettings.minBodyLength
+  const max = TaskSettings.maxBodyLength
 
-  const trimmedLength = computed(() => body.value.trim().length)
+  const { isValidLength } = useTrimmedLength(body, {
+    min,
+    max,
+  })
+
   const canSubmit = computed(() => {
-    return trimmedLength.value >= min && trimmedLength.value <= max && !isSubmitting.value
+    return isValidLength.value && !isSubmitting.value
   })
 
   async function confirm(): Promise<void> {
@@ -94,9 +101,6 @@
       isSubmitting.value = false
     }
   }
-
-  const min = TaskSettings.minBodyLength
-  const max = TaskSettings.maxBodyLength
 
   const rules = [
     (val: string) => (!!val && val.trim().length > 0) || 'Task body is required',

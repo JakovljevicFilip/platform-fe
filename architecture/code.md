@@ -17,6 +17,7 @@
 
 1. Maximum file length is 120 lines.
 2. Should a file exceed 120 lines part(s) of it should be moved to a helper files, as defined in files.md.
+3. UI components may be refactored by extracting logic into composables, as defined in files.md.
 
 ### 3.2 Import Rules
 

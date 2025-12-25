@@ -60,15 +60,12 @@
    1. Defines the contract between Application and Infrastructure for data returned from Infrastructure.
 7. Application Entity ({ApplicationEntity}.ts)
    1. UI-facing type defines view-model data structures.
-8. Parsed Application Entity (Parsed{ApplicationEntity}.ts)
-   1. Bundles AggregateEntity + ApplicationEntity into a single parsed model.
-9. Runner ({feature}-run.ts)
-   1.  Execution unit implementing Runner.
-10. Composable (use{Functionality}.ts)
+8. Runner ({feature}-run.ts)
+   1. Execution unit implementing Runner.
+9. Composable (use{Functionality}.ts)
    1. Vue composable encapsulating reusable reactive application behavior.
-11. Input Validation Helper (`{field|form|usecase}-input.ts`)
-   1.  Declarative, UI-level input validation rules and helpers used by Vue components to validate form state and derive submit eligibility.
-
+10. Input Validation Helper (`{field|form|usecase}-input.ts`)
+    1. Declarative, UI-level input validation rules and helpers used by Vue components to validate form state and derive submit eligibility.
 
 #### 3.3.3 Infrastructure Layer Schema
 

@@ -13,7 +13,7 @@ any microservice or business domain.
 
 ## 2. Structure
 
-````
+```
 /src/application/Platform/AggregateSchema/
  ├─ Domain/
  │   ├─ AggregateEntity.ts             # Canonical aggregate entity interface
@@ -26,9 +26,8 @@ any microservice or business domain.
  │   └─ README.md                      # Documentation for the entire AggregateSchema module
  └─ Application/
      └─ Types/
-         ├─ ApplicationEntity.ts       # Shape of an entity used in the Application layer.
-         └─ ParsedApplicationEntity.ts # Aggregate+Application pair used throughout the Application layer
-````
+         └─ ApplicationEntity.ts       # Shape of an entity used in the Application layer.
+```
 
 ## 3. Purpose
 
@@ -60,21 +59,16 @@ Standardized domain‑level error wrapper.
 
 UUID value object.
 
-### Application Entity Types
+### Application Entity
 
 These represent the bridge between **domain entities** and **UI-facing
 data**.
-
--   `ApplicationEntity` --- base UI model\
--   `ParsedApplicationEntity` --- bundle containing:
-    -   the canonical `AggregateEntity`
-    -   the UI-facing `ApplicationEntity`
 
 ## 4. Usage
 
 ### Example: Defining an AggregateEntity
 
-``` ts
+```ts
 import type { AggregateEntity } from 'src/application/Platform/AggregateSchema/Domain/AggregateEntity'
 
 export interface ExampleEntity extends AggregateEntity {
@@ -86,7 +80,7 @@ export interface ExampleEntity extends AggregateEntity {
 
 ### Example: Implementing an Aggregate
 
-``` ts
+```ts
 import { Aggregate } from 'src//application/Platform/AggregateSchema/Domain/Aggregate'
 import { DomainError } from 'src/application/Platform/AggregateSchema/Domain/AggregateError'
 
@@ -95,11 +89,11 @@ export class ExampleAggregate extends Aggregate<ExampleEntity> {
 
   override rebuild(id: string, created_at: string, content: string): ExampleEntity {
     if (!id || !created_at || !content) {
-      throw new DomainError(
-        ExampleAggregate.AGGREGATE_NAME,
-        'Missing data while rebuilding.',
-        { id, created_at, content },
-      )
+      throw new DomainError(ExampleAggregate.AGGREGATE_NAME, 'Missing data while rebuilding.', {
+        id,
+        created_at,
+        content,
+      })
     }
 
     return { id, created_at, content }
@@ -107,31 +101,12 @@ export class ExampleAggregate extends Aggregate<ExampleEntity> {
 }
 ```
 
-### Example: Using ParsedApplicationEntity
+### Example: Using ApplicationEntity
 
-``` ts
-import type { ExampleEntity } from '../../Domain/ExampleEntity'
+```ts
+import { type ApplicationEntity } from 'src/application/Platform/AggregateSchema/Application/Types/ApplicationEntity'
 
-import type { ParsedExampleEntity, ExampleEntityApplicationEntity } from '../Types/ParsedExampleEntity'
-
-export const exampleParser = {
-  parseOne(aggregate: ExampleEntity): ParsedExampleEntity {
-    const application: ParsedExampleEntity = {
-      id: aggregate.id.toString(),
-      createdAt: new Date(aggregate.created_at),
-      content: aggregate.content,
-
-      // UI-only
-      isEditing: false,
-      editContent: aggregate.content,
-      isSelected: false,
-    }
-
-    return { aggregate, application }
-  },
-
-  parseMany(aggregates: ExampleEntity[]): ParsedExampleEntity[] {
-    return aggregates.map(t => this.parseOne(t))
-  },
+export interface NewTask extends ApplicationEntity {
+  body: string
 }
 ```

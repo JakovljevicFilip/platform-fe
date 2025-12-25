@@ -1,10 +1,9 @@
 /**
  * Task Store
  * -----------------------------------------------------------------------------
- * Application-level state store for Task ParsedApplicationEntities.
+ * Application-level state store for Task AggregateEntities.
  */
 
-// TODO: Remove references to ParsedApplication entities.
 import type { Task } from '../Domain/Task'
 
 import { defineStore } from 'pinia'

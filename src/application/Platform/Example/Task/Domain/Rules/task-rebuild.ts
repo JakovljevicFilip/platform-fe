@@ -1,4 +1,4 @@
-import { TaskError } from '../TaskError'
+import { TaskDomainError } from '../TaskDomainError'
 
 type TaskRebuildRule = {
   canRebuild(props: { body: unknown; status: unknown; created_at: unknown }): asserts props is {
@@ -13,7 +13,7 @@ export const taskRebuildRule: TaskRebuildRule = {
     const { body, status, created_at } = props
 
     if (typeof body !== 'string' || typeof status !== 'string' || !(created_at instanceof Date)) {
-      throw new TaskError('Invalid Task persistence shape.', props)
+      throw new TaskDomainError('Invalid Task persistence shape.', props)
     }
   },
 }

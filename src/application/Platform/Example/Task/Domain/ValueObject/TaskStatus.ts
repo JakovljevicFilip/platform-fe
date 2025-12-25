@@ -5,6 +5,7 @@
  * Ensures only valid statuses exist.
  * Comparable by value. Immutable.
  */
+import { TaskDomainError } from '../TaskDomainError'
 
 export class TaskStatus {
   private constructor(public readonly value: string) {}
@@ -26,7 +27,7 @@ export class TaskStatus {
       case 'done':
         return TaskStatus.DONE
       default:
-        throw new Error(`Invalid TaskStatus: ${input}`)
+        throw new TaskDomainError(`Invalid TaskStatus: ${input}`)
     }
   }
 

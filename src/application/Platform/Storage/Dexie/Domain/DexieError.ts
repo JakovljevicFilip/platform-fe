@@ -9,7 +9,7 @@
  * Example:
  *  - Expected string ID, but Dexie returned a non-string key.
  */
-import { DomainError } from 'src/application/Platform/AggregateSchema/Domain/AggregateError'
+import { DomainError } from 'src/application/Platform/AggregateSchema/Domain/DomainError'
 
 export class DexieError extends DomainError {
   constructor(message: string, details?: unknown) {

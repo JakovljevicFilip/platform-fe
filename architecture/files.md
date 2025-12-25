@@ -37,11 +37,13 @@
    1. Defines the persistence contract that Infrastructure must implement.
 4. Aggregate Settings ({Aggregate}Settings.ts)
    1. Provides aggregate-level constants and configuration values.
-5. Domain Rules (Rules/{aggregate}-rules.ts)
+5. Domain Error ({Aggregate}DomainError.ts)
+   1. Typed error for domain-level failures.
+6. Domain Rules (Rules/{aggregate}-rules.ts)
    1. Internal domain rule helpers used only by the Aggregate.
-6. Puml Schema ({Domain|Aggregate|Functionality}.puml)
+7. Puml Schema ({Domain|Aggregate|Functionality}.puml)
    1. Represents Domain/Aggregate/Functionality as a Puml schema.
-7. README.md
+8. README.md
    1. Represents the Domain/Aggregate in the form of a README.md file.
 
 #### 3.3.2 Application Layer Schema
@@ -58,13 +60,15 @@
    1. Converts domain aggregates into application-facing entities.
 6. Response Contract (Response/{Method}Response.ts)
    1. Defines the contract between Application and Infrastructure for data returned from Infrastructure.
-7. Application Entity ({ApplicationEntity}.ts)
+7. Application Entity (Types/{ApplicationEntity}.ts)
    1. UI-facing type defines view-model data structures.
-8. Runner ({feature}-run.ts)
+8. Application Error ({Aggregate}ApplicationError.ts)
+   1. Typed error for application-level failures.
+9. Runner ({feature}-run.ts)
    1. Execution unit implementing Runner.
-9. Composable (use{Functionality}.ts)
-   1. Vue composable encapsulating reusable reactive application behavior.
-10. Input Validation Helper (`{field|form|usecase}-input.ts`)
+10. Composable (use{Functionality}.ts)
+    1. Vue composable encapsulating reusable reactive application behavior.
+11. Input Validation Helper (Input/{field|form|usecase}-input.ts)
     1. Declarative, UI-level input validation rules and helpers used by Vue components to validate form state and derive submit eligibility.
 
 #### 3.3.3 Infrastructure Layer Schema

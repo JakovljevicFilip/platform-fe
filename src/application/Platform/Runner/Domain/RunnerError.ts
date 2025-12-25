@@ -9,7 +9,7 @@
  * Enables consistent error handling across Runner-based execution flows.
  */
 
-import { DomainError } from 'src/application/Platform/AggregateSchema/Domain/AggregateError'
+import { DomainError } from 'src/application/Platform/AggregateSchema/Domain/DomainError'
 
 export class RunnerError extends DomainError {
   constructor(message: string, details?: unknown) {

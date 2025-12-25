@@ -6,7 +6,7 @@
 
 import { TaskSettings } from '../TaskSettings'
 import type { TaskStatus } from '../ValueObject/TaskStatus'
-import { TaskError } from '../TaskError'
+import { TaskDomainError } from '../TaskDomainError'
 
 export const taskRules = {
   /* ------------------------------------------------------------------------ */
@@ -15,7 +15,7 @@ export const taskRules = {
 
   validateBodyNotEmpty(body: string): void {
     if (!body || body.trim().length === 0) {
-      throw new TaskError('Task body cannot be empty.')
+      throw new TaskDomainError('Task body cannot be empty.')
     }
   },
 
@@ -25,7 +25,7 @@ export const taskRules = {
     const max = TaskSettings.maxBodyLength
 
     if (trimmed < min || trimmed > max) {
-      throw new TaskError(`Task body must be between ${min} and ${max} characters.`)
+      throw new TaskDomainError(`Task body must be between ${min} and ${max} characters.`)
     }
   },
 
@@ -44,7 +44,7 @@ export const taskRules = {
 
   canChange(currentStatus: TaskStatus, newBody: string): void {
     if (currentStatus.toString() === 'done') {
-      throw new TaskError('Cannot change a completed (done) task.')
+      throw new TaskDomainError('Cannot change a completed (done) task.')
     }
 
     this.validateBodyNotEmpty(newBody)
@@ -53,7 +53,7 @@ export const taskRules = {
 
   canRemove(currentStatus: TaskStatus): void {
     if (currentStatus.toString() === 'in_progress') {
-      throw new TaskError('Cannot remove a task that is in progress.')
+      throw new TaskDomainError('Cannot remove a task that is in progress.')
     }
   },
 }

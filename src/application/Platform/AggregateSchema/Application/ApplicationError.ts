@@ -9,7 +9,6 @@
  *  - optional structured details for debugging or logging
  */
 
-// TODO: Add Errors to files architecture
 export class ApplicationError extends Error {
   readonly domain: string
   readonly caller: string

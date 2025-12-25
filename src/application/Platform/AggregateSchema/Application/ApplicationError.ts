@@ -15,7 +15,7 @@ export class ApplicationError extends Error {
   readonly caller: string
   readonly details?: unknown
 
-  constructor(domain: string,caller: string, message: string, details?: unknown) {
+  constructor(domain: string, caller: string, message: string, details?: unknown) {
     super(`[${domain}.${caller}] ${message}`)
 
     this.name = 'ApplicationError'

@@ -3,11 +3,12 @@
  * -----------------------------------------------------------------------------
  * Typed domain error specific to the Task application layer.
  */
+import { TaskSettings } from '../Domain/TaskSettings'
 
 import { ApplicationError } from 'src/application/Platform/AggregateSchema/Application/ApplicationError'
 
 export class TaskApplicationError extends ApplicationError {
-  constructor(message: string, caller: string, details?: unknown) {
-    super('Task', message, caller, details)
+  constructor(caller: string, message: string, details?: unknown) {
+    super(TaskSettings.aggregateName, caller, message, details)
   }
 }

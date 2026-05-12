@@ -1,0 +1,9 @@
+{
+  "appId": "com.filipjakovljevic.platform",
+  "appName": "platform-fe",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  }
+}

@@ -2,6 +2,7 @@
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file
 
 import { defineConfig } from '#q-app/wrappers'
+import pkg from './package.json'
 
 export default defineConfig((/* ctx */) => {
   return {
@@ -53,7 +54,9 @@ export default defineConfig((/* ctx */) => {
       // publicPath: '/',
       // analyze: true,
       // env: {},
-      // rawDefine: {}
+      rawDefine: {
+        __APP_VERSION__: JSON.stringify(pkg.version),
+      },
       // ignorePublicFolder: true,
       // minify: false,
       // polyfillModulePreload: true,

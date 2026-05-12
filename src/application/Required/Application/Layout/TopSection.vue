@@ -3,8 +3,8 @@
     <NoticeComponent />
 
     <q-toolbar>
-      <!-- App name -->
       <q-toolbar-title class="row items-center no-wrap">
+        <!-- App name -->
         <span>{{ PlatformConfig.applicationName }}</span>
 
         <!-- Vertical divider -->
@@ -17,6 +17,12 @@
 
         <q-btn flat dense label="Example" to="/example/task" />
       </q-toolbar-title>
+
+      <!-- Pushes version to the right -->
+      <q-space />
+
+      <!-- Version -->
+      <div>v{{ PlatformConfig.applicationVersion }}</div>
     </q-toolbar>
   </q-header>
 </template>

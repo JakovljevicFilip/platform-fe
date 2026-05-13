@@ -34,14 +34,13 @@ yarn-error.log*
 .env.*
 !.env.example
 
-# Android generated launcher icons
+# Launcher icons (PNG only)
 src-capacitor/android/app/src/main/res/mipmap-*/ic_launcher*.png
 src-capacitor/android/app/src/main/res/mipmap-*/ic_launcher_foreground.png
 src-capacitor/android/app/src/main/res/mipmap-*/ic_launcher_round.png
 
-# Android generated splash screens
+# Splash screens (PNG only)
 src-capacitor/android/app/src/main/res/drawable*/splash.png
 
-# iOS generated Capacitor assets
 src-capacitor/ios/App/App/Assets.xcassets/AppIcon.appiconset/*
 src-capacitor/ios/App/App/Assets.xcassets/Splash.imageset/*

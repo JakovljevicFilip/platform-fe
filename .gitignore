@@ -37,10 +37,11 @@ yarn-error.log*
 # Android generated launcher icons
 src-capacitor/android/app/src/main/res/mipmap-*/ic_launcher*.png
 src-capacitor/android/app/src/main/res/mipmap-*/ic_launcher_foreground.png
+src-capacitor/android/app/src/main/res/mipmap-*/ic_launcher_round.png
 
 # Android generated splash screens
 src-capacitor/android/app/src/main/res/drawable*/splash.png
 
-# iOS generated icons and splash screens
-src-capacitor/ios/App/App/Assets.xcassets/AppIcon.appiconset/*.png
-src-capacitor/ios/App/App/Assets.xcassets/Splash.imageset/*.png
+# iOS generated Capacitor assets
+src-capacitor/ios/App/App/Assets.xcassets/AppIcon.appiconset/*
+src-capacitor/ios/App/App/Assets.xcassets/Splash.imageset/*

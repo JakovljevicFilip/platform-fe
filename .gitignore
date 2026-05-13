@@ -33,3 +33,14 @@ yarn-error.log*
 .env
 .env.*
 !.env.example
+
+# Launcher icons (PNG only)
+src-capacitor/android/app/src/main/res/mipmap-*/ic_launcher*.png
+src-capacitor/android/app/src/main/res/mipmap-*/ic_launcher_foreground.png
+src-capacitor/android/app/src/main/res/mipmap-*/ic_launcher_round.png
+
+# Splash screens (PNG only)
+src-capacitor/android/app/src/main/res/drawable*/splash.png
+
+src-capacitor/ios/App/App/Assets.xcassets/AppIcon.appiconset/*
+src-capacitor/ios/App/App/Assets.xcassets/Splash.imageset/*

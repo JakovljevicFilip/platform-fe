@@ -9,6 +9,8 @@ It establishes a clear architectural baseline for microservice-oriented applicat
 
 This repository serves as the foundational platform for future applications built on top of the same architecture.
 
+---
+
 ## Setup
 
 ### 1. Prerequisites
@@ -57,6 +59,8 @@ yarn dev
 
 This launches Quasar in dev mode with hot-reload enabled.
 
+---
+
 ## Architecture Documentation
 
 All architectural rules live inside the [`architecture/`](architecture) directory:
@@ -69,6 +73,8 @@ All architectural rules live inside the [`architecture/`](architecture) director
 - YAML specifications used for enforcing system-level rules (if present)
 
 This folder serves as the single source of truth for how domains, layers, files, and conventions must be applied.
+
+---
 
 ## Development
 
@@ -95,6 +101,88 @@ yarn build
 ```
 
 Offline-first behavior is implemented through the Platform layer and Quasar features such as PWA support, caching, and storage adapters.
+
+---
+
+## Android
+
+### Developing for Android
+
+This project uses **Quasar + Capacitor** to build native Android applications.
+
+### Prerequisites
+
+Before building Android APKs, ensure you have:
+
+- Android Studio installed
+- Android SDK configured
+- Java (JDK 11+ recommended)
+- Gradle available (or use the included wrapper)
+- Capacitor Android platform initialized (`src-capacitor/android` exists)
+
+
+### Building Android APK
+
+To generate an Android build:
+
+```bash
+quasar build -m capacitor -T android
+```
+
+Then navigate into the Android project:
+
+```bash
+cd src-capacitor/android
+```
+
+Build a debug APK:
+
+```bash
+./gradlew assembleDebug
+```
+
+The generated APK will be available under:
+
+```
+src-capacitor/android/app/build/outputs/apk/debug/
+```
+
+Install the APK on a connected Android device or emulator:
+```
+adb install app/build/outputs/apk/debug/app-debug.apk
+```
+
+### Updating android APK
+
+Android builds rely heavily on application versioning.
+
+This project uses the `version` field in `package.json` as the single source of truth for Android versioning.
+
+Before creating any new build or release, bump the version:
+
+```bash
+npm version patch
+```
+
+This will:
+- Increment the version (e.g. `1.0.0 → 1.0.1`)
+- Ensure Android builds are correctly recognized as new installs/updates
+- Keep Capacitor sync consistent with app store requirements
+
+You can also use:
+
+```bash
+npm version minor
+npm version major
+```
+
+To update/replace the APK:
+
+```
+adb install -r app/build/outputs/apk/debug/app-debug.apk
+```
+
+---
 
 ## Summary
 

@@ -5,6 +5,8 @@
     <InAppNotificationExample />
     <q-separator spaced />
     <NoticeExample />
+    <q-separator spaced />
+    <DarkModeExample />
   </q-page>
 </template>
 
@@ -12,4 +14,5 @@
   import LogExample from './Components/LogExample.vue'
   import InAppNotificationExample from './Components/InAppNotificationExample.vue'
   import NoticeExample from './Components/NoticeExample.vue'
+  import DarkModeExample from './Components/DarkModeExample.vue'
 </script>

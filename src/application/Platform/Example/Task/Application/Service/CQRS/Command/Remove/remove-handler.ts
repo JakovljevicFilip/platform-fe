@@ -1,4 +1,3 @@
-import type { TaskRemovePayload } from './TaskRemovePayload'
 import { taskRemoveCommand } from './remove-command'
 
 import type { Task } from 'src/application/Platform/Example/Task/Domain/Task'
@@ -19,7 +18,7 @@ class TaskRemoveHandler {
 
   async remove(task: Task): Promise<void> {
     try {
-      const payload = <TaskRemovePayload>{
+      const payload = {
         task: task,
       }
       await this.command.command(payload)

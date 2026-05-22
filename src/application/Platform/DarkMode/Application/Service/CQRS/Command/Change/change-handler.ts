@@ -1,4 +1,3 @@
-import type { DarkModeChangePayload } from './DarkModeChangePayload'
 import { darkModeChangeCommand } from './change-command'
 
 import type { DarkMode } from 'src/application/Platform/DarkMode/Domain/DarkMode'
@@ -19,7 +18,7 @@ class ChangeHandler {
 
   async change(darkMode: DarkMode, newValue: boolean): Promise<void> {
     try {
-      const payload = <DarkModeChangePayload>{
+      const payload = {
         darkMode: darkMode,
         newValue: newValue,
       }

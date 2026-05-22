@@ -1,4 +1,3 @@
-import type { TaskAddPayload } from './TaskAddPayload'
 import { taskAddCommand } from './add-command'
 
 import { logger } from 'src/application/Platform/Log/Application/log-service'
@@ -17,7 +16,7 @@ class TaskAddHandler {
 
   async add(body: string): Promise<void> {
     try {
-      const payload = <TaskAddPayload>{
+      const payload = {
         body: body,
       }
       await this.command.command(payload)

@@ -1,4 +1,3 @@
-import type { TaskChangePayload } from './TaskChangePayload'
 import { taskChangeCommand } from './change-command'
 
 import type { Task } from 'src/application/Platform/Example/Task/Domain/Task'
@@ -19,7 +18,7 @@ class TaskChangeHandler {
 
   async change(task: Task, changedBody: string): Promise<void> {
     try {
-      const payload = <TaskChangePayload>{
+      const payload = {
         task: task,
         changedBody: changedBody,
       }

@@ -16,6 +16,15 @@ To get `adb`:
 - Add the `platform-tools` directory to your `PATH` so your shell can find `adb` without typing the full path
 - Example: if `adb` is installed at `/home/user/Android/Sdk/platform-tools/adb`, add `/home/user/Android/Sdk/platform-tools` to your `PATH`
 
+For a physical Android device, also:
+
+- Enable Developer Options on the device
+- Turn on USB debugging
+- Connect the device to your computer with a USB cable before installing
+- Accept the USB debugging authorization prompt on the device
+- Make sure `adb devices` shows the device before running `adb install`
+- Install the correct USB/OEM driver if your operating system does not detect the device automatically
+
 ---
 
 ## 2. Building the Android APK
@@ -76,6 +85,8 @@ This ensures:
 Use Android Debug Bridge (ADB) to install the APK on a connected device or emulator.
 
 This step is only needed if you want to sideload the APK onto a device or emulator.
+
+For a physical device, plug it in over USB first, confirm USB debugging is enabled, and verify the device appears in `adb devices`.
 
 ### Fresh installation
 

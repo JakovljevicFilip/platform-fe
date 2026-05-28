@@ -39,6 +39,18 @@ Stop the container with:
 docker compose down
 ```
 
+Remove containers:
+
+```bash
+docker compose down -v
+```
+
+If you also ran the Android APK process, clean up that separate compose stack too:
+
+```bash
+docker compose -f docker-compose.android.yml down -v
+```
+
 ### 3. Run locally
 
 Install dependencies:
@@ -106,81 +118,7 @@ Offline-first behavior is implemented through the Platform layer and Quasar feat
 
 ## Android
 
-### Developing for Android
-
-This project uses **Quasar + Capacitor** to build native Android applications.
-
-### Prerequisites
-
-Before building Android APKs, ensure you have:
-
-- Android Studio installed
-- Android SDK configured
-- Java (JDK 11+ recommended)
-- Gradle available (or use the included wrapper)
-- Capacitor Android platform initialized (`src-capacitor/android` exists)
-
-
-### Building Android APK
-
-To generate an Android build:
-
-```bash
-quasar build -m capacitor -T android
-```
-
-Then navigate into the Android project:
-
-```bash
-cd src-capacitor/android
-```
-
-Build a debug APK:
-
-```bash
-./gradlew assembleDebug
-```
-
-The generated APK will be available under:
-
-```
-src-capacitor/android/app/build/outputs/apk/debug/
-```
-
-Install the APK on a connected Android device or emulator:
-```
-adb install app/build/outputs/apk/debug/app-debug.apk
-```
-
-### Updating android APK
-
-Android builds rely heavily on application versioning.
-
-This project uses the `version` field in `package.json` as the single source of truth for Android versioning.
-
-Before creating any new build or release, bump the version:
-
-```bash
-npm version patch
-```
-
-This will:
-- Increment the version (e.g. `1.0.0 → 1.0.1`)
-- Ensure Android builds are correctly recognized as new installs/updates
-- Keep Capacitor sync consistent with app store requirements
-
-You can also use:
-
-```bash
-npm version minor
-npm version major
-```
-
-To update/replace the APK:
-
-```
-adb install -r app/build/outputs/apk/debug/app-debug.apk
-```
+Android build and deployment instructions live in [`src-capacitor/README.md`](src-capacitor/README.md).
 
 ---
 

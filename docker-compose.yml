@@ -1,3 +1,4 @@
+# Project default compose file.
 services:
   quasar:
     build: .

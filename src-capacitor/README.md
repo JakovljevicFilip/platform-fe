@@ -1,52 +1,30 @@
 # Android Development Guide (Quasar + Capacitor)
 
-This guide outlines the process for developing, building, and deploying native Android applications using the **Quasar Framework** and **Capacitor**.
+This guide outlines the Docker-only process for building and deploying native Android applications using the **Quasar Framework** and **Capacitor**.
 
 ---
 
 ## 1. Prerequisites
 
-Ensure your environment meets these requirements before attempting a build:
-
-- **Android Studio**: Installed and updated
-- **Android SDK**: Properly configured within Android Studio
-- **Java**: JDK 11 or higher recommended
-- **Gradle**: Available system-wide or via the included project wrapper
-- **Capacitor Android platform**: `src-capacitor/android` must exist
+Ensure Docker is available on your machine.
 
 ---
 
 ## 2. Building the Android APK
 
-The build process involves two steps:
+The build process is handled entirely by Docker.
 
-1. Compiling Quasar web assets
-2. Assembling the native Android binary
-
-### Step 1: Build Quasar assets
-
-Run:
+### Step 1: Run the Docker build
 
 ```bash
-quasar build -m capacitor -T android
+docker compose run --rm android-build
 ```
 
-### Step 2: Build Android APK
+### Step 2: Retrieve the APK
 
-Navigate into the native Android project and build the debug APK:
+The container builds the Android app and writes the debug APK to:
 
-```bash
-cd src-capacitor/android
-./gradlew assembleDebug
-```
-
-### Output location
-
-The generated APK will be available at:
-
-```
 src-capacitor/android/app/build/outputs/apk/debug/app-debug.apk
-```
 
 ---
 
@@ -92,13 +70,13 @@ Use Android Debug Bridge (ADB) to install the APK on a connected device or emula
 ### Fresh installation
 
 ```bash
-adb install app/build/outputs/apk/debug/app-debug.apk
+adb install src-capacitor/android/app/build/outputs/apk/debug/app-debug.apk
 ```
 
 ### Update existing app
 
 ```bash
-adb install -r app/build/outputs/apk/debug/app-debug.apk
+adb install -r src-capacitor/android/app/build/outputs/apk/debug/app-debug.apk
 ```
 
 ---
@@ -107,7 +85,6 @@ adb install -r app/build/outputs/apk/debug/app-debug.apk
 
 Workflow:
 
-- Build Quasar assets
-- Build Android APK via Gradle
+- Build the Android APK through Docker
 - Bump version in package.json
-- Install via ADB
+- Install the APK via ADB

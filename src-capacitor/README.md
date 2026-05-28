@@ -8,6 +8,14 @@ This guide outlines the Docker-only process for building and deploying native An
 
 Ensure Docker is available on your machine.
 
+If you want to install the APK on a physical device or emulator, also install `adb` through the Android SDK `platform-tools` package.
+
+To get `adb`:
+
+- Install Android SDK Platform-Tools
+- Add the `platform-tools` directory to your `PATH` so your shell can find `adb` without typing the full path
+- Example: if `adb` is installed at `/home/user/Android/Sdk/platform-tools/adb`, add `/home/user/Android/Sdk/platform-tools` to your `PATH`
+
 ---
 
 ## 2. Building the Android APK
@@ -66,6 +74,8 @@ This ensures:
 ## 4. Deployment
 
 Use Android Debug Bridge (ADB) to install the APK on a connected device or emulator.
+
+This step is only needed if you want to sideload the APK onto a device or emulator.
 
 ### Fresh installation
 

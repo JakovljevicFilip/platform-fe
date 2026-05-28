@@ -26,7 +26,7 @@ cleanup() {
 
 trap cleanup EXIT
 
-if [ ! -f "$temp_splash_file" ]; then
+if [ ! -f "/workspace/src-capacitor/android/app/src/main/res/drawable/splash.png" ] && [ ! -f "$temp_splash_file" ]; then
   mkdir -p "$(dirname "$temp_splash_file")"
   cat > "$temp_splash_file" <<'EOF'
 <?xml version="1.0" encoding="utf-8"?>

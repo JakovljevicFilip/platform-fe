@@ -1,0 +1,23 @@
+# Android build compose file.
+services:
+  android-build:
+    build:
+      context: .
+      dockerfile: docker/android/Dockerfile
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+      - android-node-modules:/workspace/node_modules
+      - android-src-capacitor-node-modules:/workspace/src-capacitor/node_modules
+      - android-gradle-cache:/root/.gradle
+    environment:
+      ANDROID_HOME: /opt/android-sdk
+      ANDROID_SDK_ROOT: /opt/android-sdk
+      JAVA_HOME: /usr/lib/jvm/java-21-openjdk-amd64
+      GRADLE_OPTS: -Dorg.gradle.java.home=/usr/lib/jvm/java-21-openjdk-amd64
+    tty: true
+
+volumes:
+  android-node-modules:
+  android-src-capacitor-node-modules:
+  android-gradle-cache:

@@ -17,7 +17,7 @@ The build process is handled entirely by Docker.
 ### Step 1: Run the Docker build
 
 ```bash
-docker compose run --rm android-build
+docker compose -f docker-compose.android.yml run --rm android-build
 ```
 
 ### Step 2: Retrieve the APK
